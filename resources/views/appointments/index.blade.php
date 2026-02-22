@@ -91,11 +91,20 @@
                                             <form method="POST" action="{{ route('appointments.update', $appointment->id) }}" class="flex items-center space-x-2" onsubmit="return confirm('Czy na pewno chcesz przywrócić tę wizytę do aktywnych?');">
                                                 @csrf
                                                 @method('PATCH')
-                                                <select name="status" class="border-gray-300 rounded-md shadow-sm text-sm py-1 bg-gray-100">
+                                                <select name="status" class="border-gray-300 rounded-md shadow-sm text-sm py-1 bg-gray-100" onchange="
+                                                    let btn = this.form.querySelector('button[type=submit]');
+                                                    if(this.value === 'Zakończona') {
+                                                        btn.disabled = true;
+                                                        btn.classList.add('opacity-50', 'cursor-not-allowed');
+                                                    } else {
+                                                        btn.disabled = false;
+                                                        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                                                    }
+                                                ">
                                                     <option value="Zakończona" selected>Zakończona</option>
                                                     <option value="Zaakceptowana">Przywróć (Zaakceptowana)</option>
                                                 </select>
-                                                <button type="submit" class="bg-gray-400 text-white px-3 py-1.5 rounded text-xs font-bold hover:bg-gray-600">Zmień</button>
+                                                <button type="submit" disabled class="bg-gray-600 text-white px-3 py-1.5 rounded text-xs font-bold hover:bg-gray-800 opacity-50 cursor-not-allowed transition-all">Zmień</button>
                                             </form>
                                             <form method="POST" action="{{ route('appointments.destroy', $appointment->id) }}" onsubmit="return confirm('Czy usunąć ten wpis z archiwum?');">
                                                 @csrf
