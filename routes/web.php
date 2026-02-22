@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/services/{service}/book', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
     Route::patch('/appointments/{appointment}', [AppointmentController::class, 'update'])->name('appointments.update');
+    Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
 });
 
 require __DIR__.'/auth.php';
